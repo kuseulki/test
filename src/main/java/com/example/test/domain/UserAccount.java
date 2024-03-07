@@ -10,16 +10,15 @@ import java.util.Objects;
 @Getter
 @ToString
 @Table(indexes = {
-        @Index(columnList = "userId"),
+        @Index(columnList = "userId", unique = true),
         @Index(columnList = "email", unique = true),
         @Index(columnList = "createdAt"),
         @Index(columnList = "createdBy")
 })
 @Entity
 public class UserAccount extends AuditingFields {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
     @Setter @Column(nullable = false, length = 50) private String userId;       // ID
     @Setter @Column(nullable = false) private String userPassword;              // PW
     @Setter @Column(length = 100) private String userName;                      // 이름 (닉네임)
@@ -45,7 +44,7 @@ public class UserAccount extends AuditingFields {
         this.memo = memo;
     }
 
-    public static UserAccount of(String userId, String userPassword, String userName, String email,  String phone, String zipCode, String addr, String addrDetail, String memo) {
+    public static UserAccount of(String userId, String userPassword, String userName, String email, String phone, String zipCode, String addr, String addrDetail, String memo) {
         return new UserAccount(userId, userPassword, userName, email, phone, zipCode, addr, addrDetail, memo);
     }
 
